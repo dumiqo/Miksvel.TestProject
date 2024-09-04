@@ -6,4 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Miksvel.TestProject.ProviderOne\Miksvel.TestProject.ProviderOne.csproj" />
+    <ProjectReference Include="..\Miksvel.TestProject.ProviderTwo\Miksvel.TestProject.ProviderTwo.csproj" />
+  </ItemGroup>
+
 </Project>

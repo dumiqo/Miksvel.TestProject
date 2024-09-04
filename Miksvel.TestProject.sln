@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.Api", "Miksvel.TestProject.Api2\Miksvel.TestProject.Api.csproj", "{C4842342-7E43-465A-A268-41ACA2EF0676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.Api", "Miksvel.TestProject.Api\Miksvel.TestProject.Api.csproj", "{C4842342-7E43-465A-A268-41ACA2EF0676}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.ProviderOne.Test", "Miksvel.TestProject.ProviderOne.Test\Miksvel.TestProject.ProviderOne.Test.csproj", "{F74BD6E4-96EF-4648-AB73-2DC010E6D867}"
 EndProject

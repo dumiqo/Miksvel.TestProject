@@ -1,42 +1,43 @@
-using Microsoft.Extensions.Hosting;
+using Miksvel.TestProject.ProviderOne;
+using Miksvel.TestProject.ProviderTwo;
 
 namespace Miksvel.TestProject.Api
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                                     .AddEnvironmentVariables()
-                                     .AddCommandLine(args)
-                                     .AddJsonFile("appsettings.json")
-                                     .Build();
+            var builder = WebApplication.CreateBuilder(args);
 
-            var builder = CreateHostBuilder(args, configuration);
-            using var host = builder.Build();
+            // Add services to the container.
 
-            await host.RunAsync();
+            ConfigureService(builder.Services);
+
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.MapControllers();
+
+            app.Run();
         }
 
-        public static HostApplicationBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        private static void ConfigureService(IServiceCollection services)
         {
-            var builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddHostedService<HostedService>();
-
-            builder.Logging.AddConsole();
-            return builder;
-        }
-    }
-    public class HostedService : IHostedService
-    {
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            ProviderOneDependency.Register(services);
+            ProviderTwoDependency.Register(services);
         }
     }
 }
