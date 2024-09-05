@@ -17,6 +17,7 @@ namespace Miksvel.TestProject.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHealthChecks();
 
             var app = builder.Build();
 
@@ -30,7 +31,7 @@ namespace Miksvel.TestProject.Api
             app.UseHttpsRedirection();
 
             app.MapControllers();
-
+            app.MapHealthChecks("/ping");
             app.Run();
         }
 

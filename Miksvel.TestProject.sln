@@ -3,28 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.Core", "Miksvel.TestProject.Core\Miksvel.TestProject.Core.csproj", "{0BA01016-810E-4E31-A745-071EA9698E36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.Core", "Miksvel.TestProject.Core\Miksvel.TestProject.Core.csproj", "{0BA01016-810E-4E31-A745-071EA9698E36}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{86ABAF28-0D2D-4A56-966A-B9F934DFFB02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.ProviderOne", "Miksvel.TestProject.ProviderOne\Miksvel.TestProject.ProviderOne.csproj", "{21615B23-86B4-4C2A-A07D-7C936B008954}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderOne", "Miksvel.TestProject.ProviderOne\Miksvel.TestProject.ProviderOne.csproj", "{21615B23-86B4-4C2A-A07D-7C936B008954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.ProviderTwo", "Miksvel.TestProject.ProviderTwo\Miksvel.TestProject.ProviderTwo.csproj", "{F4EDD5F4-E324-41FA-8612-E7F53D695318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderTwo", "Miksvel.TestProject.ProviderTwo\Miksvel.TestProject.ProviderTwo.csproj", "{F4EDD5F4-E324-41FA-8612-E7F53D695318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.Cache", "Miksvel.TestProject.Cache\Miksvel.TestProject.Cache.csproj", "{C70F1FF4-234C-40C1-9BD2-75C5E65F1CBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.Cache", "Miksvel.TestProject.Cache\Miksvel.TestProject.Cache.csproj", "{C70F1FF4-234C-40C1-9BD2-75C5E65F1CBC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B04D9BD8-8779-4A12-84CC-C7B8361DCD8F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B04D9BD8-8779-4A12-84CC-C7B8361DCD8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.ProviderTwo.Test", "Miksvel.TestProject.ProviderTwo.Test\Miksvel.TestProject.ProviderTwo.Test.csproj", "{169A130A-FC41-40DD-B8A4-9700E10B4587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderTwo.Test", "Miksvel.TestProject.ProviderTwo.Test\Miksvel.TestProject.ProviderTwo.Test.csproj", "{169A130A-FC41-40DD-B8A4-9700E10B4587}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4C9F2FB-857D-4A64-A218-14F46D72EC40}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.Api", "Miksvel.TestProject.Api\Miksvel.TestProject.Api.csproj", "{C4842342-7E43-465A-A268-41ACA2EF0676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.Api", "Miksvel.TestProject.Api\Miksvel.TestProject.Api.csproj", "{C4842342-7E43-465A-A268-41ACA2EF0676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miksvel.TestProject.ProviderOne.Test", "Miksvel.TestProject.ProviderOne.Test\Miksvel.TestProject.ProviderOne.Test.csproj", "{F74BD6E4-96EF-4648-AB73-2DC010E6D867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderOne.Test", "Miksvel.TestProject.ProviderOne.Test\Miksvel.TestProject.ProviderOne.Test.csproj", "{F74BD6E4-96EF-4648-AB73-2DC010E6D867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
