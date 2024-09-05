@@ -69,7 +69,7 @@ namespace Miksvel.TestProject.ProviderTwo
             }
             if (filter.DestinationDateTime != null)
             {
-                enumerable = enumerable.Where(x => x.Departure.Date <= filter.DestinationDateTime);
+                enumerable = enumerable.Where(x => x.Arrival.Date <= filter.DestinationDateTime);
             }
 
             return enumerable.ToArray();

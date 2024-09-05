@@ -10,7 +10,7 @@ namespace Miksvel.TestProject.ProviderOne
         private readonly IMapper _mapper;
         private readonly IProviderOneClient _providerClient;
 
-        public ProviderOneSearchService(IProviderOneClient providerClient, IMapper mapper)
+        public ProviderOneSearchService(IMapper mapper, IProviderOneClient providerClient)
         {
             _providerClient = providerClient;
             _mapper = mapper;
