@@ -16,9 +16,9 @@ namespace Miksvel.TestProject.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<SearchResponse> Search(SearchRequest request)
+        public async Task<SearchResponse> Search(SearchRequest request, CancellationToken cancellationToken)
         {
-            return await _aggregateSearchService.SearchAsync(request, default);
+            return await _aggregateSearchService.SearchAsync(request, cancellationToken);
         }
     }
 }
