@@ -21,7 +21,7 @@ namespace Miksvel.TestProject.ProviderTwo
                 .ForMember(x => x.DestinationDateTime, x => x.MapFrom(y => y.Arrival.Date))
                 .ForMember(x => x.Price, x => x.MapFrom(y => y.Price))
                 .ForMember(x => x.TimeLimit, x => x.MapFrom(y => y.TimeLimit))
-                .ForMember(x => x.Id, x => Guid.NewGuid());
+                .BeforeMap((pr, r) => r.Id = Guid.NewGuid());
         }
     }
 }

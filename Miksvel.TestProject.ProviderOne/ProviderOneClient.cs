@@ -36,7 +36,7 @@ namespace Miksvel.TestProject.ProviderOne
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in checking livenes of ProviderTwo");
+                _logger.LogError(ex, "Error in checking livenes of ProviderOne");
                 return false;
             }
         }
@@ -66,7 +66,7 @@ namespace Miksvel.TestProject.ProviderOne
         {
             foreach (var route in routes)
             {
-                var ttl = DateTime.Now - route.TimeLimit;
+                var ttl = route.TimeLimit - DateTime.Now;
                 await _cache.TryAddAsync(GetRouteCacheKey(route), route, ttl, cancellationToken);
             }
         }
@@ -83,7 +83,7 @@ namespace Miksvel.TestProject.ProviderOne
                 return [];
             }
 
-            return entities.Where(x => x.DateFrom >= DateTime.UtcNow
+            return entities.Where(x => x.DateFrom >= DateTime.Now
                                     && x.DateTo <= request.DateTo
                                     && x.Price <= request.MaxPrice)
                 .ToArray();

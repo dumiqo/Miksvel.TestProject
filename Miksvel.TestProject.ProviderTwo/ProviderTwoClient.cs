@@ -65,7 +65,7 @@ namespace Miksvel.TestProject.ProviderTwo
         {
             foreach (var route in routes)
             {
-                var ttl = DateTime.Now - route.TimeLimit;
+                var ttl = route.TimeLimit - DateTime.Now;
                 await _cache.TryAddAsync(GetRouteCacheKey(route), route, ttl, cancellationToken);
             }
         }
@@ -82,7 +82,7 @@ namespace Miksvel.TestProject.ProviderTwo
                 return [];
             }
 
-            return entities.Where(x => x.Departure.Date >= DateTime.UtcNow 
+            return entities.Where(x => x.Departure.Date >= DateTime.Now 
                                     && x.TimeLimit >= request.MinTimeLimit)
                 .ToArray();
         }
@@ -107,7 +107,7 @@ namespace Miksvel.TestProject.ProviderTwo
 
         private string GetRouteCacheKey(ProviderTwoRoute route)
         {
-            return $"{nameof(ProviderTwoClient)}-{route.Departure}-{route.Arrival}-{route.Departure.Date}";
+            return $"{nameof(ProviderTwoClient)}-{route.Departure.Point}-{route.Arrival.Point}-{route.Departure.Date}";
         }
     }
 }
