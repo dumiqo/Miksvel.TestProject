@@ -17,11 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B04D9BD8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderTwo.Test", "Miksvel.TestProject.ProviderTwo.Test\Miksvel.TestProject.ProviderTwo.Test.csproj", "{169A130A-FC41-40DD-B8A4-9700E10B4587}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4C9F2FB-857D-4A64-A218-14F46D72EC40}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.Api", "Miksvel.TestProject.Api\Miksvel.TestProject.Api.csproj", "{C4842342-7E43-465A-A268-41ACA2EF0676}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miksvel.TestProject.ProviderOne.Test", "Miksvel.TestProject.ProviderOne.Test\Miksvel.TestProject.ProviderOne.Test.csproj", "{F74BD6E4-96EF-4648-AB73-2DC010E6D867}"
