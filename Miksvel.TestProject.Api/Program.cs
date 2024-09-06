@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Miksvel.TestProject.Api.Services;
 using Miksvel.TestProject.ProviderOne;
 using Miksvel.TestProject.ProviderTwo;
@@ -32,7 +34,15 @@ namespace Miksvel.TestProject.Api
             app.UseHttpsRedirection();
 
             app.MapControllers();
-            app.MapHealthChecks("/ping");
+            app.MapHealthChecks("/ping", new HealthCheckOptions
+            {
+                ResultStatusCodes =
+                    {
+                        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                        [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                        [HealthStatus.Unhealthy] = StatusCodes.Status500InternalServerError
+                    }
+            });
             app.Run();
         }
 
