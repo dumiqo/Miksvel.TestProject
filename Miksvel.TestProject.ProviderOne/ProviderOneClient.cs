@@ -1,4 +1,5 @@
-﻿using Miksvel.TestProject.Cache;
+﻿using Microsoft.Extensions.Logging;
+using Miksvel.TestProject.Cache;
 using Miksvel.TestProject.Core.Model;
 using Miksvel.TestProject.ProviderOne.Model;
 using Newtonsoft.Json;
@@ -12,21 +13,32 @@ namespace Miksvel.TestProject.ProviderOne
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ICacheService<ProviderOneRoute> _cache;
+        private readonly ILogger<ProviderOneClient> _logger;
 
         public ProviderOneClient(
-            IHttpClientFactory httpClientFactory, 
-            ICacheService<ProviderOneRoute> cache)
+            IHttpClientFactory httpClientFactory,
+            ICacheService<ProviderOneRoute> cache,
+            ILogger<ProviderOneClient> logger)
         {
             _httpClientFactory = httpClientFactory;
             _cache = cache;
+            _logger = logger;
         }
 
         public async Task<bool> IsAvailableAsync(CancellationToken cancellationToken)
         {
-            using var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
+            try
+            {
+                using var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
 
-            return response.StatusCode == System.Net.HttpStatusCode.OK;
+                return response.StatusCode == System.Net.HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in checking livenes of ProviderTwo");
+                return false;
+            }
         }
 
         public async Task<ProviderOneSearchResponse> SearchAsync(

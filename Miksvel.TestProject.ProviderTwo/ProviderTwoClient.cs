@@ -1,4 +1,5 @@
-﻿using Miksvel.TestProject.Cache;
+﻿using Microsoft.Extensions.Logging;
+using Miksvel.TestProject.Cache;
 using Miksvel.TestProject.ProviderTwo.Model;
 using Newtonsoft.Json;
 using System.Text;
@@ -11,21 +12,32 @@ namespace Miksvel.TestProject.ProviderTwo
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ICacheService<ProviderTwoRoute> _cache;
+        private readonly ILogger<ProviderTwoClient> _logger;
 
         public ProviderTwoClient(
-            IHttpClientFactory httpClientFactory, 
-            ICacheService<ProviderTwoRoute> cache)
+            IHttpClientFactory httpClientFactory,
+            ICacheService<ProviderTwoRoute> cache,
+            ILogger<ProviderTwoClient> logger)
         {
             _httpClientFactory = httpClientFactory;
             _cache = cache;
+            _logger = logger;
         }
 
         public async Task<bool> IsAvailableAsync(CancellationToken cancellationToken)
         {
-            using var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
+            try
+            {
+                using var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
 
-            return response.StatusCode == System.Net.HttpStatusCode.OK;
+                return response.StatusCode == System.Net.HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in checking livenes of ProviderTwo");
+                return false;
+            }
         }
 
         public async Task<ProviderTwoSearchResponse> SearchAsync(

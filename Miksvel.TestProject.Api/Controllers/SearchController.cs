@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Miksvel.TestProject.Api.Services;
+using Miksvel.TestProject.Core.Model;
 
 namespace Miksvel.TestProject.Api.Controllers
 {
@@ -6,11 +8,17 @@ namespace Miksvel.TestProject.Api.Controllers
     [Route("[controller]")]
     public class SearchController : ControllerBase
     {
-        private readonly ILogger<SearchController> _logger;
+        private readonly IAggregateSearchService _aggregateSearchService;
 
-        public SearchController(ILogger<SearchController> logger)
+        public SearchController(IAggregateSearchService aggregateSearchService)
         {
-            _logger = logger;
+            _aggregateSearchService = aggregateSearchService;
+        }
+
+        [HttpPost]
+        public async Task<SearchResponse> Search(SearchRequest request)
+        {
+            return await _aggregateSearchService.SearchAsync(request, default);
         }
     }
 }

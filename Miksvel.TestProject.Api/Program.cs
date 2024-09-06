@@ -1,3 +1,4 @@
+using Miksvel.TestProject.Api.Services;
 using Miksvel.TestProject.ProviderOne;
 using Miksvel.TestProject.ProviderTwo;
 
@@ -37,6 +38,8 @@ namespace Miksvel.TestProject.Api
 
         private static void ConfigureService(IServiceCollection services)
         {
+            services.AddScoped<IAggregateSearchService, AggregateSearchService>();
+
             ProviderOneDependency.Register(services);
             ProviderTwoDependency.Register(services);
         }
