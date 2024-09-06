@@ -44,7 +44,7 @@ namespace Miksvel.TestProject.ProviderOne.Test
 
             var startDate = DateTime.UtcNow;
 
-            client.SearchAsync(Arg.Any<ProviderOneSearchRequest>(), default)
+            client.SearchAsync(Arg.Any<ProviderOneSearchRequest>(), false, default)
                 .Returns(Task.FromResult(new ProviderOneSearchResponse()
                 {
                     Routes = [
@@ -128,7 +128,7 @@ namespace Miksvel.TestProject.ProviderOne.Test
 
             var startDate = DateTime.UtcNow;
 
-            client.SearchAsync(Arg.Any<ProviderOneSearchRequest>(), default)
+            client.SearchAsync(Arg.Any<ProviderOneSearchRequest>(), false, default)
                 .Returns(Task.FromResult(new ProviderOneSearchResponse()
                 {
                     Routes = [

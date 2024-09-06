@@ -23,7 +23,11 @@ namespace Miksvel.TestProject.ProviderOne
 
         public async Task<SearchResponse> SearchAsync(SearchRequest request, CancellationToken cancellationToken)
         {
-            var response = await _providerClient.SearchAsync(_mapper.Map<ProviderOneSearchRequest>(request), cancellationToken);
+            var response = await _providerClient.SearchAsync(
+                _mapper.Map<ProviderOneSearchRequest>(request),
+                request.Filters?.OnlyCached ?? false,
+                cancellationToken);
+
             var array = Filter(response.Routes, request.Filters);
 
             var routes = new Route[array.Length];

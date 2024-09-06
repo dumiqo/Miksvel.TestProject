@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Miksvel.TestProject.Cache;
 using Miksvel.TestProject.Core;
 
 namespace Miksvel.TestProject.ProviderTwo
@@ -11,6 +12,7 @@ namespace Miksvel.TestProject.ProviderTwo
             serviceProvider.AddScoped<IProviderTwoClient, ProviderTwoClient>();
             serviceProvider.AddScoped<ISearchService, ProviderTwoSearchService>();
             serviceProvider.AddHttpClient();
+            CacheDependency.Register(serviceProvider);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Miksvel.TestProject.Cache
 {
-    public interface ICacheService
+    public interface ICacheService<T> 
     {
-        Task<bool> Add<T>(string key, T obj);
-        Task<T> Get<T>(string key);
+        Task<bool> TryAddAsync(string key, T obj, TimeSpan ttl, CancellationToken cancellationToken);
+        Task<IEnumerable<T>?> FindAsync(string keyPattern, CancellationToken cancellationToken);
     }
 }

@@ -1,20 +1,24 @@
-﻿using Miksvel.TestProject.ProviderOne.Model;
+﻿using Miksvel.TestProject.Cache;
+using Miksvel.TestProject.Core.Model;
+using Miksvel.TestProject.ProviderOne.Model;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 
 namespace Miksvel.TestProject.ProviderOne
 {
     public class ProviderOneClient : IProviderOneClient
     {
-        //todo add cache and storing data
         private const string ProviderBaseUrl = "http://provider-one/api/v1";
 
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ICacheService<ProviderOneRoute> _cache;
 
-        public ProviderOneClient(IHttpClientFactory httpClientFactory)
+        public ProviderOneClient(
+            IHttpClientFactory httpClientFactory, 
+            ICacheService<ProviderOneRoute> cache)
         {
             _httpClientFactory = httpClientFactory;
+            _cache = cache;
         }
 
         public async Task<bool> IsAvailableAsync(CancellationToken cancellationToken)
@@ -26,7 +30,55 @@ namespace Miksvel.TestProject.ProviderOne
         }
 
         public async Task<ProviderOneSearchResponse> SearchAsync(
-            ProviderOneSearchRequest request, 
+            ProviderOneSearchRequest request,
+            bool onlyCache,
+            CancellationToken cancellationToken)
+        {
+            if (onlyCache)
+            {
+                var routes = await GetFromCacheAsync(request, cancellationToken);
+                return new ProviderOneSearchResponse
+                {
+                    Routes = routes
+                };
+            }
+
+            var result = await GetFromProviderAsync(request, cancellationToken);
+            await AddToCacheAsync(result.Routes, cancellationToken);
+            return result;
+        }
+
+        private async Task AddToCacheAsync(
+            ProviderOneRoute[] routes,
+            CancellationToken cancellationToken)
+        {
+            foreach (var route in routes)
+            {
+                var ttl = DateTime.Now - route.TimeLimit;
+                await _cache.TryAddAsync(GetRouteCacheKey(route), route, ttl, cancellationToken);
+            }
+        }
+
+        private async Task<ProviderOneRoute[]> GetFromCacheAsync(
+            ProviderOneSearchRequest request,
+            CancellationToken cancellationToken)
+        {
+            var key = GetRequestCacheKeyPattern(request);
+            var entities = await _cache.FindAsync(key, cancellationToken);
+
+            if (entities == null)
+            {
+                return [];
+            }
+
+            return entities.Where(x => x.DateFrom >= DateTime.UtcNow
+                                    && x.DateTo <= request.DateTo
+                                    && x.Price <= request.MaxPrice)
+                .ToArray();
+        }
+
+        private async Task<ProviderOneSearchResponse> GetFromProviderAsync(
+            ProviderOneSearchRequest request,
             CancellationToken cancellationToken)
         {
             var json = JsonConvert.SerializeObject(request);
@@ -37,6 +89,16 @@ namespace Miksvel.TestProject.ProviderOne
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
             return JsonConvert.DeserializeObject<ProviderOneSearchResponse>(content);
+        }
+
+        private string GetRequestCacheKeyPattern(ProviderOneSearchRequest request)
+        {
+            return $"{nameof(ProviderOneClient)}-{request.From}-{request.To}";
+        }
+
+        private string GetRouteCacheKey(ProviderOneRoute route)
+        {
+            return $"{nameof(ProviderOneClient)}-{route.From}-{route.To}-{route.DateFrom}";
         }
     }
 }

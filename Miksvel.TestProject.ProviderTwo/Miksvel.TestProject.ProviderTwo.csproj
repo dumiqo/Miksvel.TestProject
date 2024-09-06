@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Miksvel.TestProject.Cache\Miksvel.TestProject.Cache.csproj" />
     <ProjectReference Include="..\Miksvel.TestProject.Core\Miksvel.TestProject.Core.csproj" />
   </ItemGroup>
 

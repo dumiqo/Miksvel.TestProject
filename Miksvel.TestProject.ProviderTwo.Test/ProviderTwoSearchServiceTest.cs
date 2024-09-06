@@ -44,7 +44,7 @@ namespace Miksvel.TestProject.ProviderTwo.Test
 
             var startDate = DateTime.UtcNow;
             
-            client.SearchAsync(Arg.Any<ProviderTwoSearchRequest>(), default)
+            client.SearchAsync(Arg.Any<ProviderTwoSearchRequest>(), false, default)
                 .Returns(Task.FromResult(new ProviderTwoSearchResponse()
                 {
                     Routes = [
@@ -143,7 +143,7 @@ namespace Miksvel.TestProject.ProviderTwo.Test
 
             var startDate = DateTime.UtcNow;
 
-            client.SearchAsync(Arg.Any<ProviderTwoSearchRequest>(), default)
+            client.SearchAsync(Arg.Any<ProviderTwoSearchRequest>(), false, default)
                 .Returns(Task.FromResult(new ProviderTwoSearchResponse()
                 {
                     Routes = [
