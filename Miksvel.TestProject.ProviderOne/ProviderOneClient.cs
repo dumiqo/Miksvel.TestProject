@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Miksvel.TestProject.Cache;
-using Miksvel.TestProject.Core.Model;
 using Miksvel.TestProject.ProviderOne.Model;
 using Newtonsoft.Json;
 using System.Text;
@@ -9,13 +9,13 @@ namespace Miksvel.TestProject.ProviderOne
 {
     public class ProviderOneClient : IProviderOneClient
     {
-        private const string ProviderBaseUrl = "http://provider-one/api/v1";
-
+        private readonly ProviderOneConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ICacheService<ProviderOneRoute> _cache;
         private readonly ILogger<ProviderOneClient> _logger;
 
         public ProviderOneClient(
+            IOptions<ProviderOneConfiguration> options,
             IHttpClientFactory httpClientFactory,
             ICacheService<ProviderOneRoute> cache,
             ILogger<ProviderOneClient> logger)
@@ -23,6 +23,7 @@ namespace Miksvel.TestProject.ProviderOne
             _httpClientFactory = httpClientFactory;
             _cache = cache;
             _logger = logger;
+            _configuration = options.Value;
         }
 
         public async Task<bool> IsAvailableAsync(CancellationToken cancellationToken)
@@ -30,7 +31,7 @@ namespace Miksvel.TestProject.ProviderOne
             try
             {
                 using var httpClient = _httpClientFactory.CreateClient();
-                var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
+                var response = await httpClient.GetAsync($"{_configuration.Host}/ping", cancellationToken);
 
                 return response.StatusCode == System.Net.HttpStatusCode.OK;
             }
@@ -97,7 +98,7 @@ namespace Miksvel.TestProject.ProviderOne
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             using var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.PostAsync($"{ProviderBaseUrl}/search", httpContent, cancellationToken);
+            var response = await httpClient.PostAsync($"{_configuration.Host}/search", httpContent, cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
             return JsonConvert.DeserializeObject<ProviderOneSearchResponse>(content);

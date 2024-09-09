@@ -10,11 +10,17 @@ namespace Miksvel.TestProject.Api
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                                     .AddEnvironmentVariables()
+                                     .AddCommandLine(args)
+                                     .AddJsonFile("appsettings.json")
+                                     .Build();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            ConfigureService(builder.Services);
+            ConfigureService(builder.Services, configuration);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,12 +52,12 @@ namespace Miksvel.TestProject.Api
             app.Run();
         }
 
-        private static void ConfigureService(IServiceCollection services)
+        private static void ConfigureService(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAggregateSearchService, AggregateSearchService>();
 
-            ProviderOneDependency.Register(services);
-            ProviderTwoDependency.Register(services);
+            ProviderOneDependency.Register(services, configuration);
+            ProviderTwoDependency.Register(services, configuration);
         }
     }
 }

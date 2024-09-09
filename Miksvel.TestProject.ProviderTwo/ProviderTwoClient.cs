@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Miksvel.TestProject.Cache;
 using Miksvel.TestProject.ProviderTwo.Model;
 using Newtonsoft.Json;
@@ -8,13 +9,13 @@ namespace Miksvel.TestProject.ProviderTwo
 {
     public class ProviderTwoClient : IProviderTwoClient
     {
-        private const string ProviderBaseUrl = "http://provider-two/api/v1";
-
+        private readonly ProviderTwoConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ICacheService<ProviderTwoRoute> _cache;
         private readonly ILogger<ProviderTwoClient> _logger;
 
         public ProviderTwoClient(
+            IOptions<ProviderTwoConfiguration> options,
             IHttpClientFactory httpClientFactory,
             ICacheService<ProviderTwoRoute> cache,
             ILogger<ProviderTwoClient> logger)
@@ -22,6 +23,7 @@ namespace Miksvel.TestProject.ProviderTwo
             _httpClientFactory = httpClientFactory;
             _cache = cache;
             _logger = logger;
+            _configuration = options.Value;
         }
 
         public async Task<bool> IsAvailableAsync(CancellationToken cancellationToken)
@@ -29,7 +31,7 @@ namespace Miksvel.TestProject.ProviderTwo
             try
             {
                 using var httpClient = _httpClientFactory.CreateClient();
-                var response = await httpClient.GetAsync($"{ProviderBaseUrl}/ping", cancellationToken);
+                var response = await httpClient.GetAsync($"{_configuration.Host}/ping", cancellationToken);
 
                 return response.StatusCode == System.Net.HttpStatusCode.OK;
             }
@@ -95,7 +97,7 @@ namespace Miksvel.TestProject.ProviderTwo
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             using var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.PostAsync($"{ProviderBaseUrl}/search", httpContent, cancellationToken);
+            var response = await httpClient.PostAsync($"{_configuration.Host}/search", httpContent, cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             return JsonConvert.DeserializeObject<ProviderTwoSearchResponse>(content);
         }
